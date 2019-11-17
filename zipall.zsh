@@ -3,6 +3,7 @@
 # Includes also hidden files.
 
 emulate -LR zsh
+set -ue
 
 zip_files() {
 	if [ -d "$1" ]; then
@@ -27,6 +28,8 @@ usage() {
 # Check the number of input parameters first
 if [ "$#" -ne 1 ]; then
         usage
+	exit 1
 else
         zip_files $1
+	exit 0
 fi

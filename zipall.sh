@@ -2,6 +2,8 @@
 # Read recursively all the files in a directory and zip them into an archive.zip.
 # Includes also hidden files.
 
+set -ue
+
 zip_files() {
 	# Check if the folder exists
         if [ -d "$1" ]; then
@@ -28,7 +30,9 @@ usage() {
 # Check the number of input parameters first
 if [ "$#" -ne 1 ]; then
         usage
+	exit 1
 else
         shopt -s nullglob dotglob
 	zip_files $1
+	exit 0
 fi
