@@ -16,6 +16,7 @@ zip_files() {
 		done
 	else
 		echo "Folder does not exist"
+		exit 128
 	fi
 }
 
