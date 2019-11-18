@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # Read recursively all the files in a directory and zip them into an archive.zip.
 # Includes also hidden files.
 
@@ -7,11 +7,11 @@ set -ue
 
 zip_files() {
 	if [ -d "$1" ]; then
-	        for file in $1/*(D); do
+	        for file in "$1"/*(D); do
 			if [ -d "$file" ]; then
-				zip_files $file
+				zip_files "${file}"
 			else
-				zip -u archive.zip $file
+				zip -u archive.zip "${file}"
 			fi
 		done
 	else
@@ -30,6 +30,6 @@ if [ "$#" -ne 1 ]; then
         usage
 	exit 1
 else
-        zip_files $1
+        zip_files "$1"
 	exit 0
 fi

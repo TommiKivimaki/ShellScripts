@@ -1,18 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Read recursively all the files in a directory and zip them into an archive.zip.
 # Includes also hidden files.
 
-set -ue
+set -o errexit
+set -o nounset
+set -o pipefail
 
 zip_files() {
 	# Check if the folder exists
         if [ -d "$1" ]; then
 		# Loop through all the files and folders in the given folder
-                for file in $1/*; do
-                        if [ -d "$file" ]; then
-                                zip_files $file
+                for file in "$1"/*; do
+                        if [ -d "${file}" ]; then
+                                zip_files "${file}"
                         else
-                                zip -u archive.zip $file
+                                zip -u archive.zip "${file}"
                         fi
                 done
         else
@@ -33,6 +35,6 @@ if [ "$#" -ne 1 ]; then
 	exit 1
 else
         shopt -s nullglob dotglob
-	zip_files $1
+	zip_files "$1"
 	exit 0
 fi
